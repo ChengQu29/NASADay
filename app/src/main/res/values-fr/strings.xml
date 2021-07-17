@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NASADay</string>
-    <string name="hello_message">Bonjour!</string>
     <string name="login">Connexion</string>
-    <string name="username">Nom d\'utilisateur: </string>
     <string name="enter_user_name">Saisissez votre nom d\'utilisateur </string>
-    <string name="password">le mot de passe: </string>
     <string name="enter_pass">Entrer le mot de passe </string>
 </resources>
