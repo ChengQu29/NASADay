@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        app:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_search_category_default"
+        app:showAsAction="always|collapseActionView"
+        android:title="search" />
+
+    <item android:id="@+id/item1"
+        android:orderInCategory="50"
+
+        android:icon="@drawable/calendar"
+        app:showAsAction="always"
+        android:title="Date picker"/>    <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+
+    <item android:id="@+id/item2"
+        android:icon="@drawable/rocket"
+        android:orderInCategory="75"
+        app:showAsAction="always"
+        android:title="Feeling lucky"/>
+
+    <item android:id="@+id/item3"
+        android:title="Go back to login"
+        android:icon="@drawable/login"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/help_item"
+        android:title="Click to see more"
+        app:showAsAction="never"
+        android:orderInCategory="400"/> <!-- This uses showAsAction=never, so look at title= parameter -->
+
+</menu>
