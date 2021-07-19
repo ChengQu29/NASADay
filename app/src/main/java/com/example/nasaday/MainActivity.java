@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //sharedprefs
     private void saveSharedPrefs(String stringToSave) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ReserveName", stringToSave);
