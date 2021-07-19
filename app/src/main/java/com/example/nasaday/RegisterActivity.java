@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * class for the registration page
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     @Override

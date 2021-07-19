@@ -12,7 +12,11 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+/**
+ * This class instantiate recyclerView and set the adapter to display data
+ */
 public class ToolBarActivity extends AppCompatActivity {
+    //recyclerView is used instead of listView
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -26,8 +30,9 @@ public class ToolBarActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+        //instantiate recyclerView
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new NasaDayAdapter();
+        adapter = new NasaDayAdapter(); //set adapter
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -56,6 +61,9 @@ public class ToolBarActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * this method responds to an item on the toolbar being selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         String message = null;

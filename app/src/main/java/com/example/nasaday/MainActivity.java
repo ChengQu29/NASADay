@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * class for the login page
+ */
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences prefs = null;
@@ -30,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.button1);
         TextView text1 = findViewById(R.id.textView1);
 
+        //if login button is clicked, go to next page
         loginButton.setOnClickListener(click -> {
             openToolBarActivity();
         });
 
+        //if the register text is clicked, go to the page for registration
         text1.setOnClickListener( click -> openRegisterActivity());
 
     }
