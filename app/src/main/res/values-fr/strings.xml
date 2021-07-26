@@ -4,4 +4,16 @@
     <string name="login">Connexion</string>
     <string name="enter_user_name">Saisissez votre nom d\'utilisateur </string>
     <string name="enter_pass">Entrer le mot de passe </string>
+    <string name="toast_message">Connexion réussie! </string>
+    <string name="snackbar_message">Enregistré avec succès! </string>
+    <string name="open">Ouverte</string>
+    <string name="close">Fermer</string>
+    <string name="search">Chercher</string>
+    <string name="date_picker">Sélecteur de date</string>
+    <string name="feeling_lucky">Se sentir chanceux</string>
+    <string name="go_back_to_login">Revenir à la connexion</string>
+    <string name="click_for_help">Cliquez pour obtenir de l\'aide</string>
+    <string name="nasa_photo_of_the_day">Photo du jour de la nasa</string>
+    <string name="version_2">Version 2.0</string>
+    <string name="beta">Beta</string>
 </resources>
