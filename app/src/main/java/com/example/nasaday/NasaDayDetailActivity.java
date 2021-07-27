@@ -1,17 +1,25 @@
 package com.example.nasaday;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -40,6 +48,11 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_day_detail);
 
+        //for toolbar;
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+
+
         //getIntent() is defined in the AppCompatActivity
         String name = getIntent().getStringExtra("name");
         //String description = getIntent().getStringExtra("description");
@@ -54,6 +67,84 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         nasaDayQuery req = new nasaDayQuery();
         req.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date="+name);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView sView = (SearchView)searchItem.getActionView(); sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    /**
+     * this method responds to an item on the toolbar being selected
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        String message = null;
+        //Look at your menu XML file. Put a case for every id in that file:
+        switch (item.getItemId()){
+            case R.id.item1:
+                openToDoActivity();
+                message = "You clicked on item 1";
+                break;
+            case R.id.item2:
+                openNasaDayActivity();
+                message = "You clicked on feeling lucky";
+                break;
+            case R.id.item3:
+                openMainActivity();
+                message = "You clicked on quit";
+                break;
+            case R.id.help_item:
+                openAlertDialogue();
+                message = "You clicked on the overflow menu";
+                break;
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    /**
+     * Altert dialogue
+     */
+    private void openAlertDialogue(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Instructions")
+                .setMessage("Click on the date to load Nasa Photo of the day or click 'feeling lucking'!")
+                .create().show();
+    }
+    //pass intent
+    private void openToDoActivity(){
+        //todo
+    }
+
+    // this is hard coded for now, this will be updated in the next iteration
+    private void openNasaDayActivity(){
+        Intent intent = new Intent(this, NasaDayDetailActivity.class);
+        intent.putExtra("name", "2018-05-05");
+        //intent.putExtra("description", current.getDescription());
+        //pass intent
+        startActivity(intent);
+    }
+
+    private void openMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivityForResult(intent, 500);
     }
 
     /**
