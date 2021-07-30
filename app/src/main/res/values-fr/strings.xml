@@ -15,5 +15,6 @@
     <string name="click_for_help">Cliquez pour obtenir de l\'aide</string>
     <string name="nasa_photo_of_the_day">Photo du jour de la nasa</string>
     <string name="version_2">Version 2.0</string>
+    <string name="version_3">Version 3.0</string>
     <string name="beta">Beta</string>
 </resources>

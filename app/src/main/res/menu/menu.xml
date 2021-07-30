@@ -11,10 +11,9 @@
 
     <item android:id="@+id/item1"
         android:orderInCategory="50"
-
         android:icon="@drawable/calendar"
         app:showAsAction="always"
-        android:title="@string/date_picker"/>    <!-- This uses showAsAction=always, so look at icon= parameter -->
+        android:title="@string/date_picker" />    <!-- This uses showAsAction=always, so look at icon= parameter -->
 
 
     <item android:id="@+id/item2"

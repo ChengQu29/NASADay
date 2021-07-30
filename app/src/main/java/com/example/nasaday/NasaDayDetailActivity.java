@@ -3,7 +3,10 @@ package com.example.nasaday;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -30,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
 /**
  * This class controls what detail information to display when the user clicked on an item on the recyclerView
@@ -99,11 +104,11 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         //Look at your menu XML file. Put a case for every id in that file:
         switch (item.getItemId()){
             case R.id.item1:
-                openToDoActivity();
-                message = "You clicked on item 1";
+                showDatePickerDialog();
+                message = "You clicked on Date Picker";
                 break;
             case R.id.item2:
-                openNasaDayActivity();
+                openRandomNasaDayActivity();
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item3:
@@ -128,20 +133,92 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 .setMessage("Click on the date to load Nasa Photo of the day or click 'feeling lucking'!")
                 .create().show();
     }
-    //pass intent
-    private void openToDoActivity(){
-        //todo
+
+    /**
+     * when user clicks the button/item, system calls the following method
+     */
+    private void showDatePickerDialog(){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    // this is hard coded for now, this will be updated in the next iteration
-    private void openNasaDayActivity(){
+    /**
+     * Fragment class for date picker
+     */
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        /**
+         * When the user picked a date, go to NasaDayDetailActivity with that date picked
+         * (show the Nasa photo of that date picked)
+         * @param view
+         * @param year
+         * @param month
+         * @param day
+         */
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            String datePicked = "";
+            datePicked=year+"-"+month+"-"+day;
+            Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
+            intent.putExtra("name", datePicked);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * Generate a random Nasa photo of the day
+     */
+    private void openRandomNasaDayActivity() {
         Intent intent = new Intent(this, NasaDayDetailActivity.class);
-        intent.putExtra("name", "2018-05-05");
+        String randomD = generateRandomDate();
+        intent.putExtra("name", randomD);
         //intent.putExtra("description", current.getDescription());
         //pass intent
         startActivity(intent);
     }
 
+    /**
+     * Generate a random date between 1995-2021
+     * NASA photo of the day only works for date between 1995-2021
+     * @return
+     */
+    private String generateRandomDate() {
+
+        String randomDate = createRandomDate(1995, 2021);
+        return randomDate;
+    }
+
+    private String createRandomDate(int startYear, int endYear){
+        String randomDate="";
+        int day = createRandomIntBetween(1,28);
+        int month = createRandomIntBetween(1,12);
+        int year = createRandomIntBetween(startYear, endYear);
+        randomDate=year+"-"+month+"-"+day;
+
+        return randomDate;
+
+    }
+
+    private int createRandomIntBetween(int start, int end){
+        return start + (int)Math.round(Math.random()*(end - start));
+    }
+
+    /**
+     * class to go back to mainActivity
+     */
     private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 500);
