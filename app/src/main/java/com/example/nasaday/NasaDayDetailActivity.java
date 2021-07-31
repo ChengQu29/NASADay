@@ -57,6 +57,9 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+        //add back button
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getIntent() is defined in the AppCompatActivity
         String name = getIntent().getStringExtra("name");
@@ -80,6 +83,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
+        /*
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchView sView = (SearchView)searchItem.getActionView(); sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -91,7 +95,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
         return true;
     }
 
@@ -100,6 +104,12 @@ public class NasaDayDetailActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == android.R.id.home){
+            this.finish();
+        }
+
         String message = null;
         //Look at your menu XML file. Put a case for every id in that file:
         switch (item.getItemId()){
@@ -112,16 +122,25 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item3:
-                openMainActivity();
-                message = "You clicked on quit";
+                openToolBarActivity();
+                message = "You clicked on go back to main";
                 break;
             case R.id.help_item:
+                //todo
+                message = "You clicked on help";
+                break;
+            case R.id.contact_me:
                 openAlertDialogue();
                 message = "You clicked on the overflow menu";
                 break;
+            case R.id.sign_out:
+                openMainActivity();
+                message = "You clicked on sign out";
+                break;
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        return true;
+        //return true;
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -129,8 +148,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
      */
     private void openAlertDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Instructions")
-                .setMessage("Click on the date to load Nasa Photo of the day or click 'feeling lucking'!")
+        alertDialogBuilder.setTitle("Contact me")
+                .setMessage("qu000026@algonquinlive.com")
                 .create().show();
     }
 
@@ -217,7 +236,15 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * class to go back to mainActivity
+     * function for going back to toolBarActivity
+     */
+    private void openToolBarActivity(){
+        Intent intent = new Intent(this, ToolBarActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * function for going back to mainActivity
      */
     private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);

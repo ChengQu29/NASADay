@@ -72,6 +72,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
+        /*
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchView sView = (SearchView)searchItem.getActionView(); sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -83,7 +84,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         public boolean onQueryTextChange(String newText) {
             return false;
         }
-        });
+        });*/
         return true;
     }
 
@@ -104,12 +105,20 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item3:
-                openMainActivity();
-                message = "You clicked on quit";
+                //todo
+                message = "You clicked on go back to main";
                 break;
             case R.id.help_item:
+                //todo
+                message = "You clicked on help";
+                break;
+            case R.id.contact_me:
                 openAlertDialogue();
                 message = "You clicked on the overflow menu";
+                break;
+            case R.id.sign_out:
+                openMainActivity();
+                message = "You clicked on sign out";
                 break;
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -133,12 +142,20 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item3:
-                openMainActivity();
-                message = "You clicked on quit";
+                openToolBarActivity();
+                message = "You clicked on go back to main";
                 break;
             case R.id.help_item:
-                openAlertDialogue();
+                //todo
                 message = "You clicked on help";
+                break;
+            case R.id.contact_me:
+                openAlertDialogue();
+                message = "You clicked on the overflow menu";
+                break;
+            case R.id.sign_out:
+                openMainActivity();
+                message = "You clicked on sign out";
                 break;
         }
 
@@ -149,13 +166,17 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         return false;
     }
 
+    private void search(){
+        //todo
+    }
+
     /**
      * Altert dialogue
      */
     private void openAlertDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Instructions")
-                .setMessage("Click on the date to load Nasa Photo of the day or click 'feeling lucking'!")
+        alertDialogBuilder.setTitle("Contact me")
+                .setMessage("qu000026@algonquinlive.com")
                 .create().show();
     }
 
@@ -196,7 +217,8 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             String datePicked = "";
-            datePicked=year+"-"+month+"-"+day;
+            int realMonth = month+1;
+            datePicked = year+"-"+realMonth+"-"+day;
             Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
             intent.putExtra("name", datePicked);
             startActivity(intent);
@@ -241,7 +263,15 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
     }
 
     /**
-     * class to go back to mainActivity
+     * function for going back to toolBarActivity
+     */
+    private void openToolBarActivity(){
+        Intent intent = new Intent(this, ToolBarActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * function for going back to mainActivity
      */
     private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);

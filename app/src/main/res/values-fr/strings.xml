@@ -11,8 +11,10 @@
     <string name="search">Chercher</string>
     <string name="date_picker">Sélecteur de date</string>
     <string name="feeling_lucky">Se sentir chanceux</string>
-    <string name="go_back_to_login">Revenir à la connexion</string>
+    <string name="go_back_to_main_page">Revenir à la page principale</string>
+    <string name="sign_out">Se déconnecter</string>
     <string name="click_for_help">Cliquez pour obtenir de l\'aide</string>
+    <string name="contact_me">Contactez moi</string>
     <string name="nasa_photo_of_the_day">Photo du jour de la nasa</string>
     <string name="version_2">Version 2.0</string>
     <string name="version_3">Version 3.0</string>

@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_search"
-        app:actionViewClass="android.widget.SearchView"
-        android:icon="@android:drawable/ic_search_category_default"
-        app:showAsAction="always|collapseActionView"
-        android:title="@string/search" />
-
     <item android:id="@+id/item1"
         android:orderInCategory="50"
         android:icon="@drawable/calendar"
@@ -23,7 +16,7 @@
         android:title="@string/feeling_lucky"/>
 
     <item android:id="@+id/item3"
-        android:title="@string/go_back_to_login"
+        android:title="@string/go_back_to_main_page"
         android:icon="@drawable/login"
         android:orderInCategory="100"
         app:showAsAction="always" />
@@ -31,6 +24,16 @@
     <item android:id="@+id/help_item"
         android:title="@string/click_for_help"
         app:showAsAction="never"
-        android:orderInCategory="400"/> <!-- This uses showAsAction=never, so look at title= parameter -->
+        android:orderInCategory="125"/>
+
+    <item android:id="@+id/contact_me"
+        android:title="@string/contact_me"
+        app:showAsAction="never"
+        android:orderInCategory="150"/>
+
+    <item android:id="@+id/sign_out"
+        android:title="@string/sign_out"
+        app:showAsAction="never"
+        android:orderInCategory="175"/><!-- This uses showAsAction=never, so look at title= parameter -->
 
 </menu>
