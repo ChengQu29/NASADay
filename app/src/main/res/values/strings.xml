@@ -18,4 +18,5 @@
     <string name="version_2">Version 2.0</string>
     <string name="version_3">Version 3.0</string>
     <string name="beta">Beta</string>
+    <string name="favorite">Save to favorites</string>
 </resources>

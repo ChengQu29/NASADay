@@ -58,7 +58,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
 
         //instantiate recyclerView
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new NasaDayAdapter(); //set adapter
+        adapter = new NasaDayAdapter(); //set adapter, inflation of rows in the recycler view happens in the adapter
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -105,8 +105,12 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item3:
-                //todo
+                openToolBarActivity();
                 message = "You clicked on go back to main";
+                break;
+            case R.id.item4:
+                //todo
+                message = "You clicked on save to favorites";
                 break;
             case R.id.help_item:
                 //todo
@@ -144,6 +148,10 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
             case R.id.item3:
                 openToolBarActivity();
                 message = "You clicked on go back to main";
+                break;
+            case R.id.item4:
+                //todo
+                message = "You clicked on save to favorites";
                 break;
             case R.id.help_item:
                 //todo
@@ -219,9 +227,16 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
             String datePicked = "";
             int realMonth = month+1;
             datePicked = year+"-"+realMonth+"-"+day;
-            Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
-            intent.putExtra("name", datePicked);
-            startActivity(intent);
+            if (year >= 1995){ //nasa photo of the day api only supports date range from 1995-now
+                Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
+                intent.putExtra("name", datePicked);
+                startActivity(intent);
+            } else {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+                alertDialogBuilder.setTitle("Date out of range")
+                        .setMessage("Nasa photo of the day starts after 1995.")
+                        .create().show();
+            }
         }
     }
 

@@ -125,6 +125,10 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 openToolBarActivity();
                 message = "You clicked on go back to main";
                 break;
+            case R.id.item4:
+                //todo
+                message = "You clicked on save to favorites";
+                break;
             case R.id.help_item:
                 //todo
                 message = "You clicked on help";
@@ -190,10 +194,19 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             String datePicked = "";
-            datePicked=year+"-"+month+"-"+day;
-            Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
-            intent.putExtra("name", datePicked);
-            startActivity(intent);
+            int realMonth = month+1;
+            datePicked = year+"-"+realMonth+"-"+day;
+            if (year >= 1995){ //nasa photo of the day api only supports date range from 1995-now
+                Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
+                intent.putExtra("name", datePicked);
+                startActivity(intent);
+            } else {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+                alertDialogBuilder.setTitle("Date out of range")
+                        .setMessage("Nasa photo of the day starts after 1995.")
+                        .create().show();
+            }
+
         }
     }
 
