@@ -5,16 +5,16 @@ package com.example.nasaday;
  */
 public class NasaDay {
 
-    private String name;
+    private String date;
     private String description;
 
-    NasaDay(String name, String description){
-        this.name = name;
+    NasaDay(String date, String description){
+        this.date = date;
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getDate() {
+        return date;
     }
 
     public String getDescription() {

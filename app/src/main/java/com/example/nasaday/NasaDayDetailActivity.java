@@ -63,7 +63,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getIntent() is defined in the AppCompatActivity
-        String name = getIntent().getStringExtra("name");
+        String date = getIntent().getStringExtra("date");
         //String description = getIntent().getStringExtra("description");
 
         nameTextView = findViewById(R.id.NasaDay_topic);
@@ -71,11 +71,11 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.NasaDay_image);
         progressBar = findViewById(R.id.progressBar);
 
-        nameTextView.setText(name);
+        nameTextView.setText(date);
         //descriptionTextView.setText(description);
 
         nasaDayQuery req = new nasaDayQuery();
-        req.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date="+name);
+        req.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date="+date);
 
         descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
     }
@@ -201,7 +201,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
             datePicked = year+"-"+realMonth+"-"+day;
             if (year >= 1995){ //nasa photo of the day api only supports date range from 1995-now
                 Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
-                intent.putExtra("name", datePicked);
+                intent.putExtra("date", datePicked);
                 startActivity(intent);
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -219,7 +219,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     private void openRandomNasaDayActivity() {
         Intent intent = new Intent(this, NasaDayDetailActivity.class);
         String randomD = generateRandomDate();
-        intent.putExtra("name", randomD);
+        intent.putExtra("date", randomD);
         //intent.putExtra("description", current.getDescription());
         //pass intent
         startActivity(intent);

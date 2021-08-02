@@ -229,7 +229,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
             datePicked = year+"-"+realMonth+"-"+day;
             if (year >= 1995){ //nasa photo of the day api only supports date range from 1995-now
                 Intent intent = new Intent(getContext(), NasaDayDetailActivity.class);
-                intent.putExtra("name", datePicked);
+                intent.putExtra("date", datePicked);
                 startActivity(intent);
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -246,7 +246,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
     private void openRandomNasaDayActivity(){
         Intent intent = new Intent(this, NasaDayDetailActivity.class);
         String randomD = generateRandomDate();
-        intent.putExtra("name", randomD);
+        intent.putExtra("date", randomD);
         //intent.putExtra("description", current.getDescription());
         //pass intent
         startActivity(intent);

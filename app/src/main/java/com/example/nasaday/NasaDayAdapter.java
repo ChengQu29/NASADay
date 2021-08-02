@@ -42,7 +42,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     String current = (String) containerView.getTag();
                     //create intent
                     Intent intent = new Intent(v.getContext(), NasaDayDetailActivity.class);
-                    intent.putExtra("name", current);
+                    intent.putExtra("date", current);
                     //intent.putExtra("description", current.getDescription());
                     //pass intent
                     v.getContext().startActivity(intent);
