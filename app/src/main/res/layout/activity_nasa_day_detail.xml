@@ -17,7 +17,7 @@
         android:id="@+id/NasaDay_image"
         android:layout_width="match_parent"
         android:layout_height="235dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -36,7 +36,8 @@
         android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:lineSpacingExtra="10dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:scrollbars="vertical"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -75,6 +76,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         nasaDayQuery req = new nasaDayQuery();
         req.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date="+name);
+
+        descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
