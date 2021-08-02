@@ -23,6 +23,8 @@ import java.util.List;
 
 public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayViewHolder> {
 
+    private List<String> nasaday = new ArrayList<>();
+
     //ViewHolder class to hold the view
     public static class NasaDayViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout containerView;
@@ -51,10 +53,18 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
         }
     }
 
+
+    //constructor to take date data
+    NasaDayAdapter(List<String> nasaday){
+        this.nasaday = nasaday;
+        System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
+    }
+
+    /*
     //hard coded for now, this will be updated in the next iteration
     private List<String> nasaday = Arrays.asList(
             "2020-07-02","2020-07-03","2020-07-04", "2020-07-05", "2020-07-06", "2020-07-07", "2020-07-08", "2020-07-09", "2020-07-10", "2020-07-11", "2020-07-12"
-    );
+    );*/
 
     @NonNull
     @Override

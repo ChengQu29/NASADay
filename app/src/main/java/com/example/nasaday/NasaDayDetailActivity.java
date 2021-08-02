@@ -7,8 +7,10 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -35,7 +37,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * This class controls what detail information to display when the user clicked on an item on the recyclerView
@@ -48,6 +52,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     ImageView imageView;
     ProgressBar progressBar;
 
+    SQLiteDatabase db ;
+    String dateToPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         //getIntent() is defined in the AppCompatActivity
         String date = getIntent().getStringExtra("date");
+        dateToPass = date;
         //String description = getIntent().getStringExtra("description");
 
         nameTextView = findViewById(R.id.NasaDay_topic);
@@ -71,6 +78,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.NasaDay_image);
         progressBar = findViewById(R.id.progressBar);
 
+        SQLiteDatabase db ;
         nameTextView.setText(date);
         //descriptionTextView.setText(description);
 
@@ -129,7 +137,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 message = "You clicked on go back to main";
                 break;
             case R.id.item4:
-                //todo
+                openSaveToFavActivity(dateToPass);
                 message = "You clicked on save to favorites";
                 break;
             case R.id.help_item:
@@ -259,6 +267,16 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    /**
+     * Save to DB
+     * @param dateToPass
+     */
+    private void openSaveToFavActivity(String dateToPass){
+
+        addtoDB(dateToPass);
+    }
+
     /**
      * function for going back to mainActivity
      */
@@ -358,5 +376,25 @@ public class NasaDayDetailActivity extends AppCompatActivity {
             descriptionTextView.setText(description);
             progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private long addtoDB(String date){
+
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
+        //add to the database and get the new ID
+        // ContentValue is provided by android and is used to store a set of values that the ContentResolver can process.
+        ContentValues newRowValues = new ContentValues();
+
+        //Now provide a value for every database column defined in MyOpener.java:
+        //put string date in the DATE column:
+        newRowValues.put(MyOpener.COL_DATE, date);
+
+        System.out.print("Rowvalues:" + newRowValues);
+
+        //Now insert in the database:
+        long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+
+        return newId;
     }
 }

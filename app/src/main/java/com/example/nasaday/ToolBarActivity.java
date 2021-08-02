@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,7 +29,9 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * This class instantiate recyclerView and set the adapter to display data
@@ -36,6 +41,9 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    SQLiteDatabase db;
+
+    private List<String> nasaday = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +64,11 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        loadFromDatabase();
+
         //instantiate recyclerView
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new NasaDayAdapter(); //set adapter, inflation of rows in the recycler view happens in the adapter
+        adapter = new NasaDayAdapter(nasaday); //set adapter, inflation of rows in the recycler view happens in the adapter
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -291,5 +301,31 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
     private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 500);
+    }
+
+    private void loadFromDatabase(){
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
+
+        String [] columns = {MyOpener.COL_ID, MyOpener.COL_DATE};
+
+        //query all the results from the database:  (Cursors are a storage object that contains rows from a query.)
+        Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+
+        int typeColIndex = results.getColumnIndex(MyOpener.COL_DATE);
+        int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
+
+        //iterate over the results, return true if there is a next item:
+        while(results.moveToNext())
+        {
+            String date = results.getString(typeColIndex);
+            long id = results.getLong(idColIndex);
+
+            //add the new message to the array list:
+            nasaday.add(date);
+        }
+
+        //At this point, the contactsList array has loaded every row from the cursor.
+
     }
 }
