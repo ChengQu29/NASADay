@@ -50,6 +50,18 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     v.getContext().startActivity(intent);
                 }
             });
+
+            containerView.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v){
+                    String current = (String) containerView.getTag();
+                    //create intent
+                    int s = getAbsoluteAdapterPosition();
+                    System.out.println("position is:" + s);
+
+                    return true;
+                }
+            });
         }
     }
 

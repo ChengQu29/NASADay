@@ -78,7 +78,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.NasaDay_image);
         progressBar = findViewById(R.id.progressBar);
 
-        SQLiteDatabase db ;
         nameTextView.setText(date);
         //descriptionTextView.setText(description);
 
