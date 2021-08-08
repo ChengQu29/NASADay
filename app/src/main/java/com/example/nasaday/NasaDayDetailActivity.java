@@ -145,7 +145,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 message = "You clicked on go to favorites";
                 break;
             case R.id.help_item:
-                //todo
+                openHelpDialogue();
                 message = "You clicked on help";
                 break;
             case R.id.contact_me:
@@ -160,6 +160,16 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         //return true;
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * open help dialogue
+     */
+    private void openHelpDialogue(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Instructions")
+                .setMessage("1. Click on dates to see detail.\n2. Long click on dates to delete.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
+                .create().show();
     }
 
     /**
@@ -271,14 +281,13 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     /**
      * Save to DB
      * @param dateToPass
      */
     private void openSaveToFavActivity(String dateToPass){
-
         addtoDB(dateToPass);
+        openToolBarActivity();
     }
 
     /**

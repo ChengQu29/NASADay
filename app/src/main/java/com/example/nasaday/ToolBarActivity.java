@@ -119,7 +119,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You are now on favorites";
                 break;
             case R.id.help_item:
-                //todo
+                openHelpDialogue();
                 message = "You clicked on help";
                 break;
             case R.id.contact_me:
@@ -178,6 +178,16 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
 
     private void search(){
         //todo
+    }
+
+    /**
+     * open help dialogue
+     */
+    private void openHelpDialogue(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Instructions")
+                .setMessage("1. Click on dates to see detail.\n2. Long click on dates to delete.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
+                .create().show();
     }
 
     /**
@@ -277,14 +287,6 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
 
     private int createRandomIntBetween(int start, int end){
         return start + (int)Math.round(Math.random()*(end - start));
-    }
-
-    /**
-     * function for going back to toolBarActivity
-     */
-    private void openToolBarActivity(){
-        Intent intent = new Intent(this, ToolBarActivity.class);
-        startActivity(intent);
     }
 
     /**
