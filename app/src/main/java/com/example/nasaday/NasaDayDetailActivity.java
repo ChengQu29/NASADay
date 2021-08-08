@@ -21,12 +21,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
 
@@ -77,6 +80,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         descriptionTextView = findViewById(R.id.NasaDay_topic_description);
         imageView = findViewById(R.id.NasaDay_image);
         progressBar = findViewById(R.id.progressBar);
+        FloatingActionButton addButton = findViewById(R.id.add_button);
 
         nameTextView.setText(date);
         //descriptionTextView.setText(description);
@@ -85,6 +89,11 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         req.execute("https://api.nasa.gov/planetary/apod?api_key=DgPLcIlnmN0Cwrzcg3e9NraFaYLIDI68Ysc6Zh3d&date="+date);
 
         descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+
+        addButton.setOnClickListener(click -> {
+            openSaveToFavActivity(dateToPass);
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -131,13 +140,9 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 openRandomNasaDayActivity();
                 message = "You clicked on feeling lucky";
                 break;
-            case R.id.item3:
-                openToolBarActivity();
-                message = "You clicked on go back to main";
-                break;
             case R.id.item4:
-                openSaveToFavActivity(dateToPass);
-                message = "You clicked on save to favorites";
+                openToolBarActivity();
+                message = "You clicked on go to favorites";
                 break;
             case R.id.help_item:
                 //todo

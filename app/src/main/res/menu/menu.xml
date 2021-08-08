@@ -15,11 +15,6 @@
         app:showAsAction="always"
         android:title="@string/feeling_lucky"/>
 
-    <item android:id="@+id/item3"
-        android:title="@string/go_back_to_main_page"
-        android:icon="@drawable/login"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 
     <item android:id="@+id/item4"
         android:title="@string/favorite"

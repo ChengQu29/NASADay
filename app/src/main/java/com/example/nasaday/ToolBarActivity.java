@@ -114,13 +114,9 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 openRandomNasaDayActivity();
                 message = "You clicked on feeling lucky";
                 break;
-            case R.id.item3:
-                openToolBarActivity();
-                message = "You clicked on go back to main";
-                break;
             case R.id.item4:
                 //todo
-                message = "You clicked on save to favorites";
+                message = "You are now on favorites";
                 break;
             case R.id.help_item:
                 //todo
@@ -155,13 +151,9 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 openRandomNasaDayActivity();
                 message = "You clicked on feeling lucky";
                 break;
-            case R.id.item3:
-                openToolBarActivity();
-                message = "You clicked on go back to main";
-                break;
             case R.id.item4:
                 //todo
-                message = "You clicked on save to favorites";
+                message = "You are now on favorites";
                 break;
             case R.id.help_item:
                 //todo
