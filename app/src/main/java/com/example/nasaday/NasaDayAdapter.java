@@ -1,6 +1,7 @@
 package com.example.nasaday;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -60,11 +61,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     int s = getAbsoluteAdapterPosition();
                     System.out.println("position is:" + s);
 
-                    //delete the item from database
-                    deleteNasaDay(nasaday.get(s).getId());
-                    //remove the item from the recyclerView
-                    nasaday.remove(s);
-                    notifyDataSetChanged();
+                    showAlert(s, view);
 
                     return true;
                 }
@@ -73,20 +70,27 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     }
 
     /**
-    protected void showAlert(int position){
+     * function to show alert dialogue window
+     * @param position
+     */
+    protected void showAlert(int position, View view){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("Delete this NasaDay ?")
                 .setMessage("You can delete this item by clicking delete")
                 .setNegativeButton("Delete", (click, b) -> {
-                    deleteNasaDay(position);
-                    nasaday.remove(position-1);
+                    deleteNasaDay(nasaday.get(position).getId()); //delete from the DB
+                    nasaday.remove(position); //remove the item from the recyclerView
                     notifyDataSetChanged();
                 })
                 .setNeutralButton("Dismiss", (click, b) ->{})
                 .create().show();
-    }*/
+    }
 
+    /**
+     * Function to delete an entry from the DB
+     * @param n
+     */
     protected void deleteNasaDay(long n){
         MyOpener dbOpener = new MyOpener(context);
         db = dbOpener.getWritableDatabase();
