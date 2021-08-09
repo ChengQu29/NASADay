@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Adapater class - defines what data to be displayed in the RecyclerView and how to display the data
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayViewHolder> {
 
-    private List<String> nasaday = new ArrayList<>();
+    private ArrayList<NasaDay> nasaday;
     SQLiteDatabase db;
     Context context;
 
@@ -61,10 +60,9 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     int s = getAbsoluteAdapterPosition();
                     System.out.println("position is:" + s);
 
-                    //showAlert(s+1);
-
+                    //delete the item from database
+                    deleteNasaDay(nasaday.get(s).getId());
                     //remove the item from the recyclerView
-                    deleteNasaDay(s+1);
                     nasaday.remove(s);
                     notifyDataSetChanged();
 
@@ -89,14 +87,14 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                 .create().show();
     }*/
 
-    protected void deleteNasaDay(int n){
+    protected void deleteNasaDay(long n){
         MyOpener dbOpener = new MyOpener(context);
         db = dbOpener.getWritableDatabase();
         db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(n)});
     }
 
     //constructor to take date data
-    NasaDayAdapter(Context context, List<String> nasaday){
+    NasaDayAdapter(Context context, ArrayList<NasaDay> nasaday){
         this.context = context;
         this.nasaday = nasaday;
         System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
@@ -119,7 +117,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
 
     @Override
     public void onBindViewHolder(@NonNull NasaDayViewHolder holder, int position){
-        String current = nasaday.get(position);
+        String current = nasaday.get(position).getDate();
         //set the name object to be the text of the row
         holder.textView.setText(current);
         //give access of the current item to the viewHolder

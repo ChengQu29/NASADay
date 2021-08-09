@@ -31,7 +31,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * This class instantiate recyclerView and set the adapter to display data
@@ -43,7 +42,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
     private RecyclerView.LayoutManager layoutManager;
     SQLiteDatabase db;
 
-    private List<String> nasaday = new ArrayList<>();
+    private ArrayList<NasaDay> nasaday = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -311,7 +310,7 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
             long id = results.getLong(idColIndex);
 
             //add the new message to the array list:
-            nasaday.add(date);
+            nasaday.add(new NasaDay(date,id));
         }
 
         //At this point, the contactsList array has loaded every row from the cursor.

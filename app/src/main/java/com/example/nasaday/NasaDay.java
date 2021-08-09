@@ -6,18 +6,18 @@ package com.example.nasaday;
 public class NasaDay {
 
     private String date;
-    private String description;
+    protected long id;
 
-    NasaDay(String date, String description){
+    NasaDay(String date, long i){
         this.date = date;
-        this.description = description;
+        id = i;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getDescription() {
-        return description;
+    public long getId(){
+        return id;
     }
 }
