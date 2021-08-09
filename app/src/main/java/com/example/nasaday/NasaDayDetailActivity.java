@@ -403,11 +403,12 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         //put string date in the DATE column:
         newRowValues.put(MyOpener.COL_DATE, date);
 
-        System.out.print("Rowvalues:" + newRowValues);
+        System.out.print("Rowvalues: " + newRowValues);
 
         //Now insert in the database:
         long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
 
+        System.out.println(" Inserted in DB, id: " + newId);
         return newId;
     }
 }

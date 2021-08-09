@@ -1,7 +1,9 @@
 package com.example.nasaday;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,9 +24,11 @@ import java.util.List;
 public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayViewHolder> {
 
     private List<String> nasaday = new ArrayList<>();
+    SQLiteDatabase db;
+    Context context;
 
     //ViewHolder class to hold the view
-    public static class NasaDayViewHolder extends RecyclerView.ViewHolder {
+    public class NasaDayViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout containerView;
         private TextView textView;
 
@@ -59,15 +61,43 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     int s = getAbsoluteAdapterPosition();
                     System.out.println("position is:" + s);
 
+                    //showAlert(s+1);
+
+                    //remove the item from the recyclerView
+                    deleteNasaDay(s+1);
+                    nasaday.remove(s);
+                    notifyDataSetChanged();
+
                     return true;
                 }
             });
         }
     }
 
+    /**
+    protected void showAlert(int position){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Delete this NasaDay ?")
+                .setMessage("You can delete this item by clicking delete")
+                .setNegativeButton("Delete", (click, b) -> {
+                    deleteNasaDay(position);
+                    nasaday.remove(position-1);
+                    notifyDataSetChanged();
+                })
+                .setNeutralButton("Dismiss", (click, b) ->{})
+                .create().show();
+    }*/
+
+    protected void deleteNasaDay(int n){
+        MyOpener dbOpener = new MyOpener(context);
+        db = dbOpener.getWritableDatabase();
+        db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(n)});
+    }
 
     //constructor to take date data
-    NasaDayAdapter(List<String> nasaday){
+    NasaDayAdapter(Context context, List<String> nasaday){
+        this.context = context;
         this.nasaday = nasaday;
         System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
     }

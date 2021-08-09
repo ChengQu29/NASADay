@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "FavoriteNasaDayDB";
-    protected final static int VERSION_NUM = 1;
+    protected final static int VERSION_NUM = 2;
     public final static String TABLE_NAME = "DATES";
     public final static String COL_DATE = "DATE";
     public final static String COL_ID = "_id";
 
     public MyOpener(Context ctx) {
-        super (ctx,DATABASE_NAME,null,VERSION_NUM);
+        super (ctx,DATABASE_NAME,null, VERSION_NUM);
     }
 
     //This function gets called if no database file exists.

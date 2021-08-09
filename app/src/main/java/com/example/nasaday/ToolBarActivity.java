@@ -68,7 +68,8 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
 
         //instantiate recyclerView
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new NasaDayAdapter(nasaday); //set adapter, inflation of rows in the recycler view happens in the adapter
+        //pass the context in for showAlert, pass nasaday in for
+        adapter = new NasaDayAdapter(getApplicationContext(), nasaday); //set adapter, inflation of rows in the recycler view happens in the adapter
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -115,7 +116,6 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item4:
-                //todo
                 message = "You are now on favorites";
                 break;
             case R.id.help_item:
@@ -152,11 +152,10 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item4:
-                //todo
                 message = "You are now on favorites";
                 break;
             case R.id.help_item:
-                //todo
+                openHelpDialogue();
                 message = "You clicked on help";
                 break;
             case R.id.contact_me:
@@ -174,10 +173,6 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
 
         Toast.makeText(this, "NavigationDrawer: " + message, Toast.LENGTH_LONG).show();
         return false;
-    }
-
-    private void search(){
-        //todo
     }
 
     /**
