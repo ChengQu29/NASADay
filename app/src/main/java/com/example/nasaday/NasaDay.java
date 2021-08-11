@@ -6,6 +6,7 @@ package com.example.nasaday;
 public class NasaDay {
 
     private String date;
+    private String image;
     protected long id;
 
     NasaDay(String date, long i){

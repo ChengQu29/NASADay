@@ -35,7 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
         //if login button is clicked, go to next page
         loginButton.setOnClickListener(click -> {
-            openToolBarActivity();
+            saveSharedPrefs(typeField.getText().toString());
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openToolBarActivity();
+            }
         });
 
         //if the register text is clicked, go to the page for registration

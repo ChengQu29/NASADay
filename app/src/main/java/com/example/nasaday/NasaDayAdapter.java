@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -25,19 +27,29 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
 
     private ArrayList<NasaDay> nasaday;
     SQLiteDatabase db;
-    Context context;
+    private Context context;
+
+    //constructor to take date data
+    NasaDayAdapter(Context mContext, ArrayList<NasaDay> nasaday){
+        this.context = mContext;
+        this.nasaday = nasaday;
+        System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
+    }
 
     //ViewHolder class to hold the view
     public class NasaDayViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout containerView;
+        private ConstraintLayout containerView;
         private TextView textView;
+        private ImageView image;
 
 
         //constructor, takes only one parameter view
-        NasaDayViewHolder(View view) {
+        public NasaDayViewHolder(View view) {
             super(view);
             containerView = view.findViewById(R.id.nasaday_row);
             textView = view.findViewById(R.id.nasaday_row_text_view);
+            image = view.findViewById(R.id.nasaday_row_imageView);
+
             //attach a clicklistener to the containerview
             containerView.setOnClickListener(new View.OnClickListener(){
 
@@ -97,13 +109,6 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
         db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(n)});
     }
 
-    //constructor to take date data
-    NasaDayAdapter(Context context, ArrayList<NasaDay> nasaday){
-        this.context = context;
-        this.nasaday = nasaday;
-        System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
-    }
-
     /*
     //hard coded for now, this will be updated in the next iteration
     private List<String> nasaday = Arrays.asList(
@@ -114,7 +119,9 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     @Override
     public NasaDayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate the xml file to java view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nasaday_row, parent, false);
+        View view;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        view = inflater.inflate(R.layout.nasaday_row, parent, false);
         //return a new ViewHolder
         return new NasaDayViewHolder(view);
     }
