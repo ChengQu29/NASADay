@@ -6,16 +6,34 @@ package com.example.nasaday;
 public class NasaDay {
 
     private String date;
-    private String image;
+    private byte[] image;
     protected long id;
 
-    NasaDay(String date, long i){
+    //default constructor
+    NasaDay(){
+
+    }
+
+    NasaDay(String date, byte[] image, long i){
         this.date = date;
+        this.image = image;
         id = i;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public void setDate(String date){
+        this.date = date;
+    }
+
+    public byte[] getImage(){
+        return image;
+    }
+
+    public void setImage(byte[] image){
+        this.image = image;
     }
 
     public long getId(){

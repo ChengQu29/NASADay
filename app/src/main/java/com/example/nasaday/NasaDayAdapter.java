@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +31,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     SQLiteDatabase db;
     private Context context;
 
-    //constructor to take date data
+    //constructor to take input data
     NasaDayAdapter(Context mContext, ArrayList<NasaDay> nasaday){
         this.context = mContext;
         this.nasaday = nasaday;
@@ -40,7 +42,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     public class NasaDayViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout containerView;
         private TextView textView;
-        private ImageView image;
+        private ImageView imageView;
 
 
         //constructor, takes only one parameter view
@@ -48,7 +50,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
             super(view);
             containerView = view.findViewById(R.id.nasaday_row);
             textView = view.findViewById(R.id.nasaday_row_text_view);
-            image = view.findViewById(R.id.nasaday_row_imageView);
+            imageView = view.findViewById(R.id.nasaday_row_imageView);
 
             //attach a clicklistener to the containerview
             containerView.setOnClickListener(new View.OnClickListener(){
@@ -129,8 +131,14 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     @Override
     public void onBindViewHolder(@NonNull NasaDayViewHolder holder, int position){
         String current = nasaday.get(position).getDate();
+
+        //convert from byte array stored in the DB back to bitmap
+        Bitmap bitmap = BitmapFactory.decodeByteArray(nasaday.get(position).getImage(), 0, nasaday.get(position).getImage().length);
         //set the name object to be the text of the row
         holder.textView.setText(current);
+        //set the imageView
+        holder.imageView.setImageBitmap(bitmap);
+
         //give access of the current item to the viewHolder
         holder.containerView.setTag(current);
     }

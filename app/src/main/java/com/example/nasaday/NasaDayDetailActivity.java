@@ -34,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -56,7 +57,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     SQLiteDatabase db ;
-    String dateToPass;
+    //String dateToPass;
+    NasaDay nasaDayToPass = new NasaDay();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         //getIntent() is defined in the AppCompatActivity
         String date = getIntent().getStringExtra("date");
-        dateToPass = date;
+        nasaDayToPass.setDate(date);
         //String description = getIntent().getStringExtra("description");
 
         nameTextView = findViewById(R.id.NasaDay_topic);
@@ -91,10 +93,20 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
 
         addButton.setOnClickListener(click -> {
-            openSaveToFavActivity(dateToPass);
+            openSaveToFavActivity(nasaDayToPass);
             Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
         });
     }
+
+    /**
+     * Save to DB
+     * @param nasaDayToPass
+     */
+    private void openSaveToFavActivity(NasaDay nasaDayToPass){
+        addtoDB(nasaDayToPass);
+        openToolBarActivity();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -282,15 +294,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * Save to DB
-     * @param dateToPass
-     */
-    private void openSaveToFavActivity(String dateToPass){
-        addtoDB(dateToPass);
-        openToolBarActivity();
-    }
-
-    /**
      * function for going back to mainActivity
      */
     private void openMainActivity(){
@@ -304,7 +307,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     class nasaDayQuery extends AsyncTask<String, Integer, String> { //<Param, Progress, Result>
 
         String description;
-        String imageurl;
         @Override
         protected String doInBackground(String...args){
             Log.i(TAG, "doInBackground: string passed: "+args[0]);
@@ -332,7 +334,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 }
                 String result = sb.toString(); //result is the whole string
                 publishProgress(25);
-                Thread.sleep(500);
 
                 // convert string to JSON:
                 JSONObject nasaDayInfo = new JSONObject(result);
@@ -344,23 +345,56 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 Log.i("NasaDayDetailActivity", "Explanation: " + explanation) ;
 
                 //get image
-                String imageurl = nasaDayInfo.getString("url");
-                Bitmap image = null;
-                URL url2 = new URL(imageurl);
-                urlConnection = (HttpURLConnection) url2.openConnection();
-                urlConnection.connect();
-                int responseCode = urlConnection.getResponseCode();
-                if (responseCode == 200) {
-                    image = BitmapFactory.decodeStream(urlConnection.getInputStream());
+                String mediaType = nasaDayInfo.getString("media_type");
+                if (mediaType.equals("image")){
+                    String imageurl = nasaDayInfo.getString("url");
+                    Bitmap image = null;
+                    URL url2 = new URL(imageurl);
+                    urlConnection = (HttpURLConnection) url2.openConnection();
+                    urlConnection.connect();
+                    int responseCode = urlConnection.getResponseCode();
+                    if (responseCode == 200) {
+                        image = BitmapFactory.decodeStream(urlConnection.getInputStream());
+                    }
+
+                    FileOutputStream outputStream = openFileOutput(image + ".png", Context.MODE_PRIVATE);
+                    image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+
+                    //convert to byte[] for storing in the DB
+                    ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.PNG, 80, blob);
+                    byte[] byteArray = blob.toByteArray();
+                    //set imageurl for nasaday
+                    nasaDayToPass.setImage(byteArray);
+
+                    outputStream.flush();
+                    outputStream.close();
+                    blob.flush();
+                    blob.close();
+                    publishProgress(75);
+
+                    imageView.setImageBitmap(image);
+
+                }else {
+                    BitmapFactory.Options o = new BitmapFactory.Options();
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.nasa,o);
+                    FileOutputStream outputStream = openFileOutput(bitmap + ".png", Context.MODE_PRIVATE);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+
+                    //convert to byte[] for storing in the DB
+                    ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, blob);
+                    byte[] byteArray = blob.toByteArray();
+                    nasaDayToPass.setImage(byteArray);
+
+                    outputStream.flush();
+                    outputStream.close();
+                    blob.flush();
+                    blob.close();
+
+                    imageView.setImageBitmap(bitmap);
+
                 }
-
-                FileOutputStream outputStream = openFileOutput(image + ".png", Context.MODE_PRIVATE);
-                image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                outputStream.flush();
-                outputStream.close();
-                publishProgress(75);
-
-                imageView.setImageBitmap(image);
 
             }catch(Exception e){
                 Log.e("Error", e.getMessage());
@@ -391,7 +425,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         }
     }
 
-    private long addtoDB(String date){
+    private long addtoDB(NasaDay nasaDayToPass){
 
         MyOpener dbOpener = new MyOpener(this);
         db = dbOpener.getWritableDatabase();
@@ -401,7 +435,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         //Now provide a value for every database column defined in MyOpener.java:
         //put string date in the DATE column:
-        newRowValues.put(MyOpener.COL_DATE, date);
+        newRowValues.put(MyOpener.COL_DATE, nasaDayToPass.getDate());
+        newRowValues.put(MyOpener.COL_IMAGE,nasaDayToPass.getImage());
 
         System.out.print("Rowvalues: " + newRowValues);
 

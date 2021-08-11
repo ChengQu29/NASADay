@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -295,22 +296,24 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         MyOpener dbOpener = new MyOpener(this);
         db = dbOpener.getWritableDatabase();
 
-        String [] columns = {MyOpener.COL_ID, MyOpener.COL_DATE};
+        String [] columns = {MyOpener.COL_ID, MyOpener.COL_DATE, MyOpener.COL_IMAGE};
 
         //query all the results from the database:  (Cursors are a storage object that contains rows from a query.)
         Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
 
-        int typeColIndex = results.getColumnIndex(MyOpener.COL_DATE);
+        int dateColIndex = results.getColumnIndex(MyOpener.COL_DATE);
+        int imageColIndex = results.getColumnIndex(MyOpener.COL_IMAGE);
         int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
 
         //iterate over the results, return true if there is a next item:
         while(results.moveToNext())
         {
-            String date = results.getString(typeColIndex);
+            String date = results.getString(dateColIndex);
+            byte[] image = results.getBlob(imageColIndex);
             long id = results.getLong(idColIndex);
 
             //add the new message to the array list:
-            nasaday.add(new NasaDay(date,id));
+            nasaday.add(new NasaDay(date, image, id));
         }
 
         //At this point, the contactsList array has loaded every row from the cursor.
