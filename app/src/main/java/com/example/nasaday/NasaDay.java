@@ -5,6 +5,7 @@ package com.example.nasaday;
  */
 public class NasaDay {
 
+    private String title;
     private String date;
     private byte[] image;
     protected long id;
@@ -14,11 +15,16 @@ public class NasaDay {
 
     }
 
-    NasaDay(String date, byte[] image, long i){
+    NasaDay(String title, String date, byte[] image, long i){
+        this.title = title;
         this.date = date;
         this.image = image;
         id = i;
     }
+
+    public String getTitle(){return title;}
+
+    public void setTitle(String title){this.title=title;}
 
     public String getDate() {
         return date;

@@ -41,7 +41,8 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     //ViewHolder class to hold the view
     public class NasaDayViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout containerView;
-        private TextView textView;
+        private TextView textViewDate;
+        private TextView textViewTitle;
         private ImageView imageView;
 
 
@@ -49,7 +50,8 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
         public NasaDayViewHolder(View view) {
             super(view);
             containerView = view.findViewById(R.id.nasaday_row);
-            textView = view.findViewById(R.id.nasaday_row_text_view);
+            textViewTitle = view.findViewById(R.id.nasaday_row_title);
+            textViewDate = view.findViewById(R.id.nasaday_row_date);
             imageView = view.findViewById(R.id.nasaday_row_imageView);
 
             //attach a clicklistener to the containerview
@@ -131,11 +133,14 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     @Override
     public void onBindViewHolder(@NonNull NasaDayViewHolder holder, int position){
         String current = nasaday.get(position).getDate();
+        String title = nasaday.get(position).getTitle();
 
         //convert from byte array stored in the DB back to bitmap
         Bitmap bitmap = BitmapFactory.decodeByteArray(nasaday.get(position).getImage(), 0, nasaday.get(position).getImage().length);
+        //set the title
+        holder.textViewTitle.setText(title);
         //set the name object to be the text of the row
-        holder.textView.setText(current);
+        holder.textViewDate.setText(current);
         //set the imageView
         holder.imageView.setImageBitmap(bitmap);
 

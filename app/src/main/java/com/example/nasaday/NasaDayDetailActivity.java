@@ -340,9 +340,14 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
                 //get description of the nasa day
                 String explanation = nasaDayInfo.getString("explanation");
-                publishProgress(50);
+                publishProgress(45);
                 description = explanation;
                 Log.i("NasaDayDetailActivity", "Explanation: " + explanation) ;
+
+                //get title of the nasa day
+                String title = nasaDayInfo.getString("title");
+                publishProgress(65);
+                nasaDayToPass.setTitle(title);
 
                 //get image
                 String mediaType = nasaDayInfo.getString("media_type");
@@ -436,6 +441,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         //Now provide a value for every database column defined in MyOpener.java:
         //put string date in the DATE column:
         newRowValues.put(MyOpener.COL_DATE, nasaDayToPass.getDate());
+        newRowValues.put(MyOpener.COL_TITLE, nasaDayToPass.getTitle());
         newRowValues.put(MyOpener.COL_IMAGE,nasaDayToPass.getImage());
 
         System.out.print("Rowvalues: " + newRowValues);

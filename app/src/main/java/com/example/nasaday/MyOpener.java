@@ -7,8 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "FavoriteNasaDayDB";
-    protected final static int VERSION_NUM = 1;
+    protected final static int VERSION_NUM = 2;
     public final static String TABLE_NAME = "DATES";
+    public final static String COL_TITLE = "TITLE";
     public final static String COL_DATE = "DATE";
     public final static String COL_IMAGE = "IMAGE";
     public final static String COL_ID = "_id";
@@ -23,6 +24,7 @@ public class MyOpener extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COL_TITLE + " text,"
                 + COL_DATE + " text,"
                 + COL_IMAGE + " BLOB);");  // add or remove columns
     }
