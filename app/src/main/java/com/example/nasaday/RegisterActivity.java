@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
         userDB = new RegistrationHelper(this);
 
 
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){

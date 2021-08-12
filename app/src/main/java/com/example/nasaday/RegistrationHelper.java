@@ -11,7 +11,7 @@ public class RegistrationHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "Login.db";
 
     public RegistrationHelper(Context context){
-        super(context, "Login.db", null, 1);
+        super(context, DBNAME, null, 1);
     }
 
     @Override
@@ -21,9 +21,9 @@ public class RegistrationHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase MyDB, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase MyDB, int oldVersion, int newVersion) {
         MyDB.execSQL("drop Table if exists users");
-
+        onCreate(MyDB);
     }
 
     public Boolean insertData(String username, String password) {
