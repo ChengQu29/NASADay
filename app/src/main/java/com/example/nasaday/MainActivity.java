@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * class for the login page
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openToolBarActivity();
+                openFavPageActivity();
             }
         });
 
@@ -50,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void openToolBarActivity() {
-        Intent intent = new Intent(this, ToolBarActivity.class);
+    private void openFavPageActivity() {
+        Intent intent = new Intent(this, FavPageActivity.class);
         startActivity(intent);
     }
 

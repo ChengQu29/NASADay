@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".NasaDayDetailActivity" />
-        <activity android:name=".ToolBarActivity" />
+        <activity android:name=".FavPageActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

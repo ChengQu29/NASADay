@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,11 +22,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +40,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * This class controls what detail information to display when the user clicked on an item on the recyclerView
@@ -57,7 +54,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     SQLiteDatabase db ;
-    //String dateToPass;
+
     NasaDay nasaDayToPass = new NasaDay();
 
     @Override
@@ -76,7 +73,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         //getIntent() is defined in the AppCompatActivity
         String date = getIntent().getStringExtra("date");
         nasaDayToPass.setDate(date);
-        //String description = getIntent().getStringExtra("description");
 
         nameTextView = findViewById(R.id.NasaDay_topic);
         descriptionTextView = findViewById(R.id.NasaDay_topic_description);
@@ -104,7 +100,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
      */
     private void openSaveToFavActivity(NasaDay nasaDayToPass){
         addtoDB(nasaDayToPass);
-        openToolBarActivity();
+        openFavPageActivity();
     }
 
 
@@ -114,19 +110,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        /*
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchView sView = (SearchView)searchItem.getActionView(); sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
         return true;
     }
 
@@ -153,7 +136,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
                 message = "You clicked on feeling lucky";
                 break;
             case R.id.item4:
-                openToolBarActivity();
+                openFavPageActivity();
                 message = "You clicked on go to favorites";
                 break;
             case R.id.help_item:
@@ -180,7 +163,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     private void openHelpDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Instructions")
-                .setMessage("1. Click on dates to see detail.\n2. Long click on dates to delete.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
+                .setMessage("1. Click to see detail.\n2. Long click to delete from favorites.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
                 .create().show();
     }
 
@@ -288,8 +271,8 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     /**
      * function for going back to toolBarActivity
      */
-    private void openToolBarActivity(){
-        Intent intent = new Intent(this, ToolBarActivity.class);
+    private void openFavPageActivity(){
+        Intent intent = new Intent(this, FavPageActivity.class);
         startActivity(intent);
     }
 
@@ -444,12 +427,12 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         newRowValues.put(MyOpener.COL_TITLE, nasaDayToPass.getTitle());
         newRowValues.put(MyOpener.COL_IMAGE,nasaDayToPass.getImage());
 
-        System.out.print("Rowvalues: " + newRowValues);
+        //System.out.print("Rowvalues: " + newRowValues);
 
         //Now insert in the database:
         long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
 
-        System.out.println(" Inserted in DB, id: " + newId);
+        //System.out.println(" Inserted in DB, id: " + newId);
         return newId;
     }
 }

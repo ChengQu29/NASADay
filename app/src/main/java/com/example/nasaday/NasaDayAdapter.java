@@ -1,18 +1,15 @@
 package com.example.nasaday;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,7 +32,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
     NasaDayAdapter(Context mContext, ArrayList<NasaDay> nasaday){
         this.context = mContext;
         this.nasaday = nasaday;
-        System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
+        //System.out.println("nasaday size currently is: " + nasaday.size()); // no data persistence yet, have to use database here
     }
 
     //ViewHolder class to hold the view
@@ -63,7 +60,6 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     //create intent
                     Intent intent = new Intent(v.getContext(), NasaDayDetailActivity.class);
                     intent.putExtra("date", current);
-                    //intent.putExtra("description", current.getDescription());
                     //pass intent
                     v.getContext().startActivity(intent);
                 }
@@ -75,7 +71,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     String current = (String) containerView.getTag();
                     //create intent
                     int s = getAbsoluteAdapterPosition();
-                    System.out.println("position is:" + s);
+                    //System.out.println("position is:" + s);
 
                     showAlert(s, view);
 

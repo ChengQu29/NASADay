@@ -7,24 +7,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -36,7 +31,7 @@ import java.util.Calendar;
 /**
  * This class instantiate recyclerView and set the adapter to display data
  */
-public class ToolBarActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class FavPageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     //recyclerView is used instead of listView
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -83,19 +78,6 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        /*
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchView sView = (SearchView)searchItem.getActionView(); sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            return false;
-        }
-        });*/
         return true;
     }
 
@@ -180,8 +162,8 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
      */
     private void openHelpDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Instructions")
-                .setMessage("1. Click on dates to see detail.\n2. Long click on dates to delete.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
+        alertDialogBuilder.setTitle("How to use the app")
+                .setMessage("1.Pick a date or click rocket icon to try your luck.\n2.Click add button to save to favorites.\n3.Click to see detail.\n4.Long click to delete from favorites.")
                 .create().show();
     }
 
@@ -318,7 +300,10 @@ public class ToolBarActivity extends AppCompatActivity implements NavigationView
             nasaday.add(new NasaDay(title,date, image, id));
         }
 
-        //At this point, the contactsList array has loaded every row from the cursor.
-
+        //At this point, every row from the cursor has been loaded.
+        System.out.println("nasaday size is : "+nasaday.size());
+        if (nasaday.size()==0){
+            openHelpDialogue();
+        }
     }
 }
