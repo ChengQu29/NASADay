@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * class for the login page
@@ -18,6 +19,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences prefs = null;
+    EditText username, password;
+    Button loginButton;
+    RegistrationHelper userDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +30,37 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
         String savedString = prefs.getString("ReserveName", "");
-        EditText typeField = findViewById(R.id.editText1);
-        typeField.setText(savedString);
 
-        Button loginButton = findViewById(R.id.button1);
+        username = findViewById(R.id.editText1);
+        username.setText(savedString);
+        password = findViewById(R.id.editText2);
+        loginButton = findViewById(R.id.button1);
+        userDB = new RegistrationHelper(this);
+
         TextView text1 = findViewById(R.id.textView1);
 
         //if login button is clicked, go to next page
         loginButton.setOnClickListener(click -> {
-            saveSharedPrefs(typeField.getText().toString());
+            saveSharedPrefs(username.getText().toString());
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFavPageActivity();
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+
+                if(user.equals("")||pass.equals("")){
+                    Toast.makeText(MainActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    Boolean checkUserPass = userDB.checkUsernamePassword(user,pass);
+                    if(checkUserPass==true){
+                        Toast.makeText(MainActivity.this, "Sign in successfully", Toast.LENGTH_SHORT).show();
+                        openFavPageActivity();
+                    }else {
+                        Toast.makeText(MainActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 

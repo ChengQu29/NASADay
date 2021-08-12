@@ -429,10 +429,17 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         //System.out.print("Rowvalues: " + newRowValues);
 
-        //Now insert in the database:
-        long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+        //check to see if the entry has already been added to favorites, if yes, show a message, if no, add to favorites
+        Cursor cursor = db.rawQuery("Select * from DATES where DATE = ? ", new String[] {nasaDayToPass.getDate()});
 
+        if (cursor.getCount() > 0) {
+            Toast.makeText(NasaDayDetailActivity.this, "Entry already in favorites", Toast.LENGTH_SHORT).show();
+            return -1;
+        } else {
+            //Now insert in the database:
+            long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+            return newId;
+        }
         //System.out.println(" Inserted in DB, id: " + newId);
-        return newId;
     }
 }
