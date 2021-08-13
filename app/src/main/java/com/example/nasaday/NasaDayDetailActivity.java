@@ -90,7 +90,6 @@ public class NasaDayDetailActivity extends AppCompatActivity {
 
         addButton.setOnClickListener(click -> {
             openSaveToFavActivity(nasaDayToPass);
-            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -438,6 +437,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         } else {
             //Now insert in the database:
             long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
             return newId;
         }
         //System.out.println(" Inserted in DB, id: " + newId);

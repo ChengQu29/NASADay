@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * SQLite open helper class
+ */
 public class RegistrationHelper extends SQLiteOpenHelper {
 
     public static final String DBNAME = "Login.db";

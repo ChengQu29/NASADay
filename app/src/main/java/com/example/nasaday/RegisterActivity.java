@@ -32,6 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
         userDB = new RegistrationHelper(this);
 
 
+        /**
+         * if username does not exist, register user, otherwise prompt a message
+         */
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -49,16 +52,21 @@ public class RegisterActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }else{
-                            Toast.makeText(RegisterActivity.this, "User already exist, please sign in", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(RegisterActivity.this, "User already exist, please sign in", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(username, "User already exist, please sign in", Snackbar.LENGTH_LONG).show();
                         }
                     }else{
-                        Toast.makeText(RegisterActivity.this, "User already exist, please sign in", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RegisterActivity.this, "User already exist, please sign in", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(username, "User already exist, please sign in", Snackbar.LENGTH_LONG).show();
                     }
                 }
 
             }
         });
 
+        /**
+         * click listener for sign in button
+         */
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
