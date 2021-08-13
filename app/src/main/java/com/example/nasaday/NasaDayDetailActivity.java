@@ -162,7 +162,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     private void openHelpDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Instructions")
-                .setMessage("1. Click to see detail.\n2. Long click to delete from favorites.\n3. Click add button to save to favorites.\n4. Click rocket icon to try your luck.")
+                .setMessage("1.Pick a date or click rocket icon to try your luck.\n2.Click add button to save to favorites.\n3.Click to see detail.\n4.Long click to delete from favorites.")
                 .create().show();
     }
 
