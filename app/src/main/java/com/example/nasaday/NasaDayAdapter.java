@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -94,6 +95,7 @@ public class NasaDayAdapter extends RecyclerView.Adapter<NasaDayAdapter.NasaDayV
                     deleteNasaDay(nasaday.get(position).getId()); //delete from the DB
                     nasaday.remove(position); //remove the item from the recyclerView
                     notifyDataSetChanged();
+                    Toast.makeText(context, "Entry deleted!", Toast.LENGTH_SHORT).show();
                 })
                 .setNeutralButton("Dismiss", (click, b) ->{})
                 .create().show();

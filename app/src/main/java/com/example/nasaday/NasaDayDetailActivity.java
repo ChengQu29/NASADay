@@ -63,7 +63,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nasa_day_detail);
 
         //for toolbar;
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
         //add back button
