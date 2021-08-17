@@ -172,7 +172,7 @@ public class NasaDayDetailActivity extends AppCompatActivity {
     private void openAlertDialogue(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Contact me")
-                .setMessage("qu000026@algonquinlive.com")
+                .setMessage("cq6507@mun.ca")
                 .create().show();
     }
 
