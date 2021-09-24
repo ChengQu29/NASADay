@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "FavoriteNasaDayDB";
-    protected final static int VERSION_NUM = 2;
+    protected final static int VERSION_NUM = 1;
     public final static String TABLE_NAME = "DATES";
     public final static String COL_TITLE = "TITLE";
     public final static String COL_DATE = "DATE";
